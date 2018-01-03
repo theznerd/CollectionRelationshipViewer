@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="CollectionRelationshipViewer.AboutView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CollectionRelationshipViewer"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="700">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="30" TextWrapping="Wrap">Collection Relationship Viewer v1.0</TextBlock>
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="15" TextWrapping="Wrap" Margin="0,0,0,5" FontWeight="Light">A utility for visualing relationships between collections in System Center Configuration Manager.</TextBlock>
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="15" TextWrapping="Wrap" Margin="0,5,0,0">Nathan Ziehnert – <Hyperlink NavigateUri="https://twitter.com/TheZNerd" RequestNavigate="Hyperlink_RequestNavigate">@theznerd</Hyperlink></TextBlock>
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="15" TextWrapping="Wrap" Margin="0,0,0,20" FontWeight="Light"><Hyperlink NavigateUri="https://z-nerd.com" RequestNavigate="Hyperlink_RequestNavigate">https://z-nerd.com/</Hyperlink></TextBlock>
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="15" TextWrapping="Wrap" Margin="0,5,0,0">Uses the following packages:</TextBlock>
+
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="15" TextWrapping="Wrap" FontWeight="Light" Margin="0,5,0,0">Caliburn.Micro – <Hyperlink NavigateUri="http://caliburnmicro.com/" RequestNavigate="Hyperlink_RequestNavigate">http://caliburnmicro.com/</Hyperlink></TextBlock>
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="15" TextWrapping="Wrap" FontWeight="Light" Margin="0,5,0,0">Costura.Fody – <Hyperlink NavigateUri="http://github.com/Fody/Costura" RequestNavigate="Hyperlink_RequestNavigate">http://github.com/Fody/Costura</Hyperlink></TextBlock>
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="15" TextWrapping="Wrap" FontWeight="Light" Margin="0,5,0,0">Fody – <Hyperlink NavigateUri="http://github.com/Fody/Fody" RequestNavigate="Hyperlink_RequestNavigate">http://github.com/Fody/Fody</Hyperlink></TextBlock>
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="15" TextWrapping="Wrap" FontWeight="Light" Margin="0,5,0,0">MahApps.Metro – <Hyperlink NavigateUri="http://github.com/MahApps/MahApps.Metro" RequestNavigate="Hyperlink_RequestNavigate">http://github.com/MahApps/MahApps.Metro</Hyperlink></TextBlock>
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="15" TextWrapping="Wrap" FontWeight="Light" Margin="0,5,0,0">MahApps.Metro.IconPacks – <Hyperlink NavigateUri="http://github.com/MahApps/MahApps.Metro.IconPacks" RequestNavigate="Hyperlink_RequestNavigate">http://github.com/MahApps/MahApps.Metro.IconPacks</Hyperlink></TextBlock>
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="15" TextWrapping="Wrap" FontWeight="Light" Margin="0,5,0,0">Syncfusion CE – <Hyperlink NavigateUri="https://www.syncfusion.com/products/communitylicense" RequestNavigate="Hyperlink_RequestNavigate">https://www.syncfusion.com/products/communitylicense</Hyperlink></TextBlock>
+            <TextBlock HorizontalAlignment="Center" TextAlignment="Center" FontSize="15" TextWrapping="Wrap" FontWeight="Light" Margin="0,20,0,0">Icon made by Smashicons – <Hyperlink NavigateUri="http://www.flaticon.com" RequestNavigate="Hyperlink_RequestNavigate">www.flaticon.com</Hyperlink> - Licensed by CC 3.0 BY</TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

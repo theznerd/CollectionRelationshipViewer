@@ -1,0 +1,212 @@
+﻿<UserControl xmlns:syncfusion="http://schemas.syncfusion.com/wpf"  x:Class="CollectionRelationshipViewer.UsersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             syncfusion:SkinStorage.VisualStyle="Metro"
+             xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:CollectionRelationshipViewer"
+             xmlns:ctrls="clr-namespace:CollectionRelationshipViewer.Controls"
+             xmlns:models="clr-namespace:CollectionRelationshipViewer.Models"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             xmlns:cal="http://www.caliburnproject.org"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Syncfusion.SfDiagram.Wpf;component/Resources/BindingStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <!--Style for the Node>-->
+            <Style TargetType="syncfusion:Node" BasedOn="{StaticResource NodeBindingStyle}">
+                <Setter Property="FontSize" Value="15"></Setter>
+                <Setter Property="Foreground" Value="Black"></Setter>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                <Setter Property="ContentTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Border Background="{DynamicResource AccentColorBrush}" CornerRadius="5" Width="Auto" Height="40">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="MouseLeftButtonDown">
+                                        <cal:ActionMessage MethodName="GetDetails">
+                                            <cal:Parameter Value="{Binding Name}" />
+                                            <cal:Parameter Value="{Binding CollectionID}" />
+                                            <cal:Parameter Value="{Binding MemberCount}" />
+                                            <cal:Parameter Value="{Binding LastRefreshTime}" />
+                                            <cal:Parameter Value="{Binding IncludeCollections}" />
+                                            <cal:Parameter Value="{Binding ExcludeCollections}" />
+                                            <cal:Parameter Value="{Binding DirectMembership}" />
+                                            <cal:Parameter Value="{Binding QueryRules}" />
+                                            <cal:Parameter Value="{Binding RefreshSchedule}" />
+                                        </cal:ActionMessage>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                                <TextBlock Text="{Binding Name}" Foreground="White" HorizontalAlignment="Center"  VerticalAlignment="Center" Margin="5"/>
+                            </Border>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <!--Style for the Connector>-->
+            <Style TargetType="syncfusion:Connector"  BasedOn="{StaticResource ConnectorBindingStyle}">
+                <Setter Property="ConnectorGeometryStyle">
+                    <Setter.Value>
+                        <Style TargetType="Path">
+                            <Setter Property="Stroke" Value="Black" />
+                            <Setter Property="StrokeThickness" Value="1.5" />
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+            <RowDefinition>
+                <RowDefinition.Style>
+                    <Style TargetType="{x:Type RowDefinition}">
+                        <Setter Property="Height" Value="0" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding DetailsVisible}" Value="True">
+                                <Setter Property="Height" Value="175" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </RowDefinition.Style>
+            </RowDefinition>
+        </Grid.RowDefinitions>
+        <syncfusion:ToolBarAdv Height="40" GripperVisibility="Hidden">
+            <Button Margin="2.5,0" x:Name="RefreshCollections">
+                <Label>Refresh Collections</Label>
+            </Button>
+            <Button Margin="2.5,0" x:Name="ZoomIn" Click="ZoomIn_Click">
+                <iconPacks:PackIconModern Kind="MagnifyAdd" Width="32" />
+            </Button>
+            <Button Margin="2.5,0" Click="Button_Click_1">
+                <iconPacks:PackIconModern Kind="MagnifyMinus" Width="32" />
+            </Button>
+            <Button Margin="2.5,0" Click="Button_Click">
+                <iconPacks:PackIconModern Kind="MagnifyBack" Width="32" />
+            </Button>
+            <Button Margin="2.5,0" x:Name="ToggleDetails" Width="85">
+                <Label Content="{Binding ToggleNote}" />
+            </Button>
+        </syncfusion:ToolBarAdv>
+        <Grid Grid.Row="1" Visibility="{Binding CollectionVis}">
+            <syncfusion:SfDiagram x:Name="UFD" Grid.Row="1" DataContext="{Binding dvm}" DataSourceSettings="{Binding DataSourceSettings}" LayoutManager="{Binding LayoutManager}" PageSettings="{Binding PageSettings}" >
+                <!--Initializes the NodeCollection-->
+                <syncfusion:SfDiagram.Nodes>
+                    <syncfusion:NodeCollection>
+                        <syncfusion:NodeViewModel Constraints="None" />
+                    </syncfusion:NodeCollection>
+                </syncfusion:SfDiagram.Nodes>
+                <!--Initializes the ConnectorCollection-->
+                <syncfusion:SfDiagram.Connectors>
+                    <syncfusion:ConnectorCollection>
+                        <syncfusion:ConnectorViewModel Constraints="None" />
+                    </syncfusion:ConnectorCollection>
+                </syncfusion:SfDiagram.Connectors>
+            </syncfusion:SfDiagram>
+        </Grid>
+        <Grid Grid.Row="2" Background="#FFEEEEEE">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Label FontFamily="Segoe UI Light" FontSize="20">Collection Details</Label>
+            <ScrollViewer Grid.Row="1">
+                <Grid Margin="10,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="1.25*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="2.5,0,0,0">
+                        <TextBlock Margin="0,0,0,2.5">
+                            <Run Text="Collection Name: " />
+                            <Run Text="{Binding CDCollectionName}" />
+                        </TextBlock>
+                        <TextBlock Margin="0,0,0,2.5">
+                            <Run Text="Collection ID: " />
+                            <Run Text="{Binding CDCollectionID}" />
+                        </TextBlock>
+                        <TextBlock Margin="0,0,0,2.5">
+                            <Run Text="Number of Members: " />
+                            <Run Text="{Binding CDNumberOfMembers}" />
+                        </TextBlock>
+                        <TextBlock Margin="0,0,0,2.5">
+                            <Run Text="Last Updated: " />
+                            <Run Text="{Binding CDLastRefreshTime}" />
+                        </TextBlock>
+                        <TextBlock Margin="0,0,0,2.5" TextWrapping="Wrap">
+                            <Run Text="Refresh Schedule: " />
+                            <Run Text="{Binding CDRefreshSchedule}" />
+                        </TextBlock>
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBlock Margin="0,0,0,2.5">
+                            <Run Text="Include Collections: " />
+                            <Run Text="{Binding CDIncludeCollectionsString}" />
+                        </TextBlock>
+                        <TextBlock Margin="0,0,0,2.5">
+                            <Run Text="Exclude Collections: " />
+                            <Run Text="{Binding CDExcludeCollectionsString}" />
+                        </TextBlock>
+                        <StackPanel Margin="0,0,0,2.5">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Padding="0,0,5,0">Query Based Rules</Label>
+                                <TextBlock Margin="0">
+                                    <Hyperlink>
+                                        <TextBlock Text="{Binding CDQueryVisibility}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <cal:ActionMessage MethodName="ToggleCDQueryRules">
+                                                    </cal:ActionMessage>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBlock>
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+                            <TextBlock Margin="3,0,0,2.5" TextWrapping="Wrap" Text="{Binding CDQueryRuleString}" Visibility="{Binding CDQueryRulesVisible}" />
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,2.5">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Padding="0,0,5,0">Direct Rules</Label>
+                                <TextBlock>
+                                    <Hyperlink>
+                                        <TextBlock Text="{Binding CDDirectVisibility}">
+                                            <i:Interaction.Triggers>
+                                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                                    <cal:ActionMessage MethodName="ToggleCDDirectMembership">
+                                                    </cal:ActionMessage>
+                                                </i:EventTrigger>
+                                            </i:Interaction.Triggers>
+                                        </TextBlock>
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+                            <TextBlock Margin="0,0,0,2.5" TextWrapping="Wrap" Text="{Binding CDDirectMembershipsString}" Visibility="{Binding CDDirectMembershipsVisible}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+        <Grid Grid.Row="1" Grid.RowSpan="2" Background="#99AAAAAA" Visibility="{Binding LoadingVisibility}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+            <ctrls:BusyDecorator IsBusyIndicatorShowing="True" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        </Grid>
+        <!--
+        <Grid Grid.Row="1" Grid.RowSpan="2" Background="#99AAAAAA" Visibility="{Binding LoadingVisibility}">
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Controls:ProgressRing Foreground="{DynamicResource AccentColorBrush}"/>
+                <Label HorizontalContentAlignment="Center">Refreshing... Please Wait...</Label>
+            </StackPanel>
+        </Grid>
+        -->
+    </Grid>
+</UserControl>
